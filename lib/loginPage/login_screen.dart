@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
   Future<String> _SignUpUser(LoginData data) async {
     print("11) 后端注册");
     try {
-      Response response = await Dio().post("http://127.0.0.1:5000/signup",
+      Response response = await Dio().post("http://192.168.0.100:5000/signup",
           queryParameters: {
             'stu_id': data.stu_id,
             'stu_pwd': data.password,

@@ -8,9 +8,10 @@ import 'package:libraryBorrowSystem/loginPage/custom_route.dart';
 import 'package:libraryBorrowSystem/themeColor/blackberrywine_themecolor.dart';
 import 'package:plugin_login/flutter_login.dart';
 import 'search_result_page.dart';
+import 'dart:io';
 
 class SearchResultList extends StatefulWidget {
-  SearchResultList([this._controller, this.keyword,this.userData]) : super();
+  SearchResultList([this._controller, this.keyword, this.userData]) : super();
 
   ScrollController _controller;
   String keyword;
@@ -25,7 +26,7 @@ class _SearchResultList extends State<SearchResultList> {
 
   void getResultList() async {
     try {
-      Response response = await Dio().get("http://127.0.0.1:5000/searchResult",
+      Response response = await Dio().get("http://192.168.0.100:5000/searchResult",
           queryParameters: {'keyword': widget.keyword, 'mode': 'basic'});
       var jsonMap = response.data;
       book_numbers = jsonMap['book_id'].length;
@@ -55,6 +56,13 @@ class _SearchResultList extends State<SearchResultList> {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child:AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    ),
       body: Column(
         children: <Widget>[
           Padding(
@@ -70,8 +78,10 @@ class _SearchResultList extends State<SearchResultList> {
                         icon: Icon(Icons.arrow_back_ios),
                         color: ThemeColorBlackberryWine.darkPurpleBlue,
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              FadePageRoute(builder: (context) => HomePage(userData: widget.userData,)));
+                          Navigator.of(context).pushReplacement(FadePageRoute(
+                              builder: (context) => HomePage(
+                                    userData: widget.userData,
+                                  )));
                         },
                       ),
                       SizedBox(
@@ -86,13 +96,16 @@ class _SearchResultList extends State<SearchResultList> {
                           onSubmitted: (keyword) {
                             print(keyword);
                             Navigator.of(context).pushReplacement(FadePageRoute(
-                              builder: (context) => searchResultsPage(keyword:keyword,userData: widget.userData,),
+                              builder: (context) => searchResultsPage(
+                                keyword: keyword,
+                                userData: widget.userData,
+                              ),
                             )); // search result home page
                           },
                         ),
                       ),
                       SizedBox(
-                        width: 30.0,
+                        width: Platform.isIOS ? 30.0 : 30.0,
                       ),
                     ],
                   ),
@@ -103,13 +116,13 @@ class _SearchResultList extends State<SearchResultList> {
             child: GridView.count(
               controller: widget._controller,
               //      padding: EdgeInsets.all(5.0),
-              crossAxisCount: 5,
+              crossAxisCount: 3,
               //一行多少个
               scrollDirection: Axis.vertical,
               //滚动方向
               crossAxisSpacing: 0.0,
               // 左右间隔
-              mainAxisSpacing: 40.0,
+              mainAxisSpacing: Platform.isIOS ? 0.0 : 40.0,
               // 上下间隔
               childAspectRatio: 0.7,
               //宽高比
@@ -118,7 +131,7 @@ class _SearchResultList extends State<SearchResultList> {
                 book_numbers,
                 (index) => Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding: Platform.isIOS? EdgeInsets.all(15.0) : const EdgeInsets.all(30.0),
                     child: ResultListView(
                       bookinfodict: _resultList[index],
                       userData: widget.userData,

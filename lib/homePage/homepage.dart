@@ -16,6 +16,7 @@ import 'discover_btn.dart';
 import 'book_list_view.dart';
 import 'package:libraryBorrowSystem/loginPage/custom_route.dart';
 import 'package:libraryBorrowSystem/bookDetails/bookdict.dart';
+import 'dart:io';
 
 class HomePage extends StatefulWidget {
   HomePage({this.userData, this.book_id});
@@ -34,9 +35,11 @@ class _HomePageState extends State<HomePage>
 
   void getBorrowList() async {
     try {
-      Response response = await Dio().get("http://127.0.0.1:5000/borrowlist",
+      Response response = await Dio().get(
+          "http://192.168.0.100:5000/borrowlist",
           queryParameters: {'stu_id': widget.userData.stu_id});
       var jsonMap = response.data;
+//      print(response);
       book_numbers = jsonMap['book_id'].length;
       print("book_number=" + book_numbers.toString());
       for (var _i = 0; _i < jsonMap['book_id'].length; _i++) {
@@ -54,7 +57,7 @@ class _HomePageState extends State<HomePage>
   Future<bool> _returnBook(String stu_id, String book_id) async {
     print("还书");
     try {
-      Response response = await Dio().post("http://127.0.0.1:5000/returnBook",
+      Response response = await Dio().post("http://192.168.0.100:5000/returnBook",
           queryParameters: {'stu_id': stu_id, 'book_id': book_id});
       print(response);
       widget.userData.overdue = 0;
@@ -132,8 +135,14 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    PageController controller =
-        PageController(initialPage: 1, viewportFraction: 0.26);
+    PageController controller;
+    try {
+      controller = Platform.isIOS
+          ? PageController(initialPage: 0, viewportFraction: 0.8)
+          : PageController(initialPage: 1, viewportFraction: 0.28);
+    } catch (e) {
+      controller = PageController(initialPage: 1, viewportFraction: 0.28);
+    }
     controller.addListener(() {});
     print('homepage - overdue= ' + widget.userData.overdue.toString());
     return Scaffold(
@@ -206,7 +215,9 @@ class _HomePageState extends State<HomePage>
 //          ),
           Center(
         child: SizedBox.fromSize(
-          size: Size.fromHeight(500.0),
+          size:
+              Platform.isIOS ? Size.fromHeight(500.0) : Size.fromHeight(500.0),
+//              Size.fromHeight(500.0),
           child: (book_numbers == 0 && widget.userData.overdue == 0)
               ? (Center(
                   child: Text(
@@ -225,7 +236,10 @@ class _HomePageState extends State<HomePage>
                       itemCount: book_numbers,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: EdgeInsets.fromLTRB(35, 0, 45, 50),
+                          padding: Platform.isIOS
+                              ? EdgeInsets.fromLTRB(20, 0, 20, 50)
+                              : EdgeInsets.fromLTRB(35, 0, 45, 50),
+//                          padding: EdgeInsets.fromLTRB(35, 0, 45, 50),
                           child: BookListView(
                             bookinfodict:
                                 _borrowList[index], // 传入的已经是bookinfodict类了

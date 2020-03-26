@@ -7,9 +7,10 @@ import 'package:libraryBorrowSystem/checkOthersBorrowList/check_others_list_page
 import 'package:libraryBorrowSystem/loginPage/custom_route.dart';
 import 'package:libraryBorrowSystem/themeColor/textstyle.dart';
 import 'package:plugin_login/flutter_login.dart';
+import 'dart:io';
 
 class CheckOtherSingleItem extends StatefulWidget {
-  CheckOtherSingleItem({this.bookInfoDict,this.userData});
+  CheckOtherSingleItem({this.bookInfoDict, this.userData});
 
   BookInfoDict bookInfoDict;
   LoginData userData;
@@ -22,7 +23,7 @@ class _CheckOthersSingleItem extends State<CheckOtherSingleItem> {
 
   Future getBookInfo() async {
     try {
-      Response response = await Dio().get("http://127.0.0.1:5000/getBookInfo",
+      Response response = await Dio().get("http://192.168.0.100:5000/getBookInfo",
           queryParameters: {
             'book_id': widget.bookInfoDict.book_id,
             'mode': 'detailed'
@@ -84,7 +85,8 @@ class _CheckOthersSingleItem extends State<CheckOtherSingleItem> {
               onTap: () {
                 Navigator.of(context).push(FadePageRoute(
                   builder: (context) => BookDetailedPage(
-                      bookinfodict: widget.bookInfoDict, userData: widget.userData),
+                      bookinfodict: widget.bookInfoDict,
+                      userData: widget.userData),
                 ));
               },
               child: Material(
@@ -96,7 +98,7 @@ class _CheckOthersSingleItem extends State<CheckOtherSingleItem> {
                   decoration: BoxDecoration(
 //                  borderRadius: BorderRadius.circular(40),
                     image: DecorationImage(
-                      image: NetworkImage(cover_url),
+                      image: new NetworkImage(cover_url),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -107,7 +109,9 @@ class _CheckOthersSingleItem extends State<CheckOtherSingleItem> {
               padding: EdgeInsets.all(8),
             ),
             ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 600),
+                constraints: Platform.isIOS
+                    ? BoxConstraints(maxWidth: 170)
+                    : BoxConstraints(maxWidth: 600),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

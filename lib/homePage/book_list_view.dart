@@ -28,7 +28,8 @@ class _BookListView extends State<BookListView> {
   Future<bool> _returnBook(String stu_id, String book_id) async {
     print("还书");
     try {
-      Response response = await Dio().post("http://127.0.0.1:5000/returnBook",
+      Response response = await Dio().post(
+          "http://192.168.0.100:5000/returnBook",
           queryParameters: {'stu_id': stu_id, 'book_id': book_id});
 //      widget.controller.addListener(() {
 //        _onRefresh();
@@ -95,11 +96,11 @@ class _BookListView extends State<BookListView> {
 
   Future getBookInfo() async {
     try {
-      Response response = await Dio().get("http://127.0.0.1:5000/getBookInfo",
-          queryParameters: {
-            'book_id': widget.bookinfodict.book_id,
-            'mode': 'basic'
-          });
+      Response response = await Dio()
+          .get("http://192.168.0.100:5000/getBookInfo", queryParameters: {
+        'book_id': widget.bookinfodict.book_id,
+        'mode': 'basic'
+      });
       var jsonMap = response.data;
 //      debugPrint(jsonMap.toString());
       widget.bookinfodict.author = jsonMap['author'];
@@ -123,6 +124,34 @@ class _BookListView extends State<BookListView> {
   void initState() {
     super.initState();
     getBookInfo();
+  }
+
+  NetworkImage imgwithretry(cover_url) {
+//    String cover_url = bookinfodict.cover_url == null
+//        ? 'https://cn.bing.com/th?id=OIP.vJ-Co9Di-qxjq_fF1wyaXgHaHa&pid=Api&w=675&h=675&rs=1'
+//        : bookinfodict.cover_url;
+//    debugPrint("begin");
+    NetworkImage img;
+    try {
+      img = new NetworkImage(cover_url);
+    } catch (w) {
+      debugPrint("w");
+      print(w);
+      try {
+        Future.delayed(Duration(milliseconds: 200)).then((e) {
+          debugPrint("error once");
+          img = new NetworkImage(cover_url);
+        });
+      } catch (e) {
+        debugPrint("e");
+        print(e);
+        Future.delayed(Duration(milliseconds: 200)).then((e) {
+          debugPrint("error twice");
+          img = new NetworkImage(cover_url);
+        });
+      }
+    }
+    return img;
   }
 
   @override
@@ -170,7 +199,7 @@ class _BookListView extends State<BookListView> {
 
                   ///边框颜色、宽
                   image: DecorationImage(
-                    image: new NetworkImage(cover_url),
+                    image: imgwithretry(cover_url),
                     fit: BoxFit.cover,
                   ),
                   color: Colors.white,

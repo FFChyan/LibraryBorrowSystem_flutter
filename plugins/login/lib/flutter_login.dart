@@ -589,7 +589,7 @@ class _FlutterLoginState extends State<FlutterLogin>
           children: <Widget>[
             Center(
               child: Image(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   height: double.infinity,
                   image: AssetImage("assets/images/bg1.jpg")
               ),

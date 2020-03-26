@@ -46,8 +46,14 @@ class _BookBasicInfo extends State<BookBasicInfo> {
 
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        color: ThemeColorBlackberryWine.lightGray[100],
+        border: Border.all(color: ThemeColorBlackberryWine.lightGray, width: 0),
+      ),
       height: 100,
-      color: ThemeColorBlackberryWine.lightGray[100],
+//      color: ThemeColorBlackberryWine.lightGray[100],
 //      child: Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,8 +68,8 @@ class _BookBasicInfo extends State<BookBasicInfo> {
                   crossAxisAlignment: CrossAxisAlignment.start, // 左对齐
                   children: <Widget>[
                     ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minWidth: 10.0, minHeight: 10.0),
+                      constraints:
+                          BoxConstraints(minWidth: 10.0, minHeight: 10.0),
                     ),
                     Text(
                       bookTitle == null ? defaultbookTitle : bookTitle,

@@ -583,22 +583,15 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
 
   Future<String> _loginStudent(LoginData data) async {
     try {
-      Response response = await Dio().get("http://127.0.0.1:5000/login",
+      Response response = await Dio().get("http://192.168.0.100:5000/login",
           queryParameters: {'stu_id': data.stu_id, 'stu_pwd': data.password});
       _data = response.data.toString();
-//        print("_data=" + _data);
       return _data;
     } catch (e) {
       print(e);
     }
     return null;
   }
-
-//  Future<bool> _register() async {
-//
-//
-//
-//  }
 
   Future<bool> _submit(ThemeData theme) async {
     // a hack to force unfocus the soft keyboard. If not, after change-route
@@ -615,19 +608,6 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     setState(() => _isSubmitting = true);
     final auth = Provider.of<Auth>(context, listen: false);
     String error;
-
-//    Future<String> _loginStudent(LoginData data) {
-//      return Future.delayed(loginTime).then((_) async {
-//        try {
-//          Response response = await Dio().get("http://127.0.0.1:5000/login",
-//              queryParameters: {'stu_id': data.name, 'stu_pwd': data.password});
-//          _data = response.data.toString();
-//        } catch (e) {
-//          print(e);
-//        }
-//        return _data;
-//      });
-//    }
 
     if (auth.isLogin) {
       error = await _loginStudent(LoginData(
