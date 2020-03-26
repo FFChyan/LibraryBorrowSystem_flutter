@@ -1,0 +1,110 @@
+name: libraryBorrowSystem
+description: library borrow system
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.5.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_login:
+    path: ./plugins/login
+  cupertino_icons: ^0.1.2
+  font_awesome_flutter: ^8.5.0
+  intl: ^0.16.1
+  provider: ^4.0.1
+  ant_icons: ^1.0.0
+  dio: ^3.0.3
+  html: ^0.14.0+2
+  sqflite: ^1.1.0
+  flutter_custom_dialog: ^1.0.16
+  timeline_list: ^0.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/ecorp.png
+    - assets/images/ecorp-lightblue.png
+    - assets/images/ecorp-lightgreen.png
+    - assets/images/bg2.jpg
+    - assets/images/bg1.jpg
+    - assets/images/books/threemusketeers.png
+    - assets/images/alipay_fine.jpg
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/OpenSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/OpenSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/OpenSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/OpenSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/OpenSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+    - family: SourceSansPro
+      fonts:
+        - asset: assets/fonts/SourceSansPro-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/SourceSansPro-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/SourceSansPro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SourceSansPro-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/SourceSansPro-Regular.ttf
+        - asset: assets/fonts/SourceSansPro-Italic.ttf
+          style: italic
+        - asset: assets/fonts/SourceSansPro-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/SourceSansPro-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/SourceSansPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SourceSansPro-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/NotoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 700
